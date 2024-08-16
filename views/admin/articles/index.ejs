@@ -3,8 +3,8 @@
 
 <div class="container ">
     <div style="display: inline;">
-    <h2>Categoria</h2>
-    <a class="btn btn-success mb-3" href="/admin/article/new"> Criar Nova Artigo</a>        
+    <h2>Artigos</h2>
+    <a class="btn btn-success mb-3" href="/admin/articles/new"> Criar Nova Artigo</a>        
     </div>
 
     <table class="table table-bordered">
@@ -23,13 +23,15 @@
                     <td><%= article.id %></td>
                     <td><%= article.title %></td>
                     <td><%= article.slug %></td>
-                    <td><%= article.categoryId %></td>
+                    <td><%= article.category.title %></td>
                     <td>
-                        <a class="btn btn-primary" href="/admin/article/edit/<%= article.id %>">Editar</a>
-                        <form style="display: inline;" action="/admin/article/delete/<%= article.id %>" method="post">
-                            <button class="btn btn-danger" onclick="confirmEvent(event, this)">Excluir</button>
+                        <a href="categories/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
+                        <form method="post" action="/articles/delete" style="display: inline;" onsubmit="confirmEvent(event, this)">
+                            <input type="hidden" value="<%= article.id %>" name="id">
+                            <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
                     </td>
+                </tr>
                 </tr>
             <% }) %>
             
