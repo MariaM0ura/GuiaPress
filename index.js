@@ -58,9 +58,10 @@ app.get('/:slug', (req, res) => {
     }).then(article => {   
         if(article != undefined) {
             Category.findAll().then(categories => {
-                res.render('index' , {article: article, categories: categories});
+                res.render('index', { articles: [article], categories: categories });
             });
-        } else {
+        }
+         else {
             res.redirect('/');
         }
     }).catch(err => {
@@ -77,15 +78,20 @@ app.get('/category/:slug', (req, res) => {
         },
         include: [{model: Article}]
     }).then( category => {   
-        if( category != undefined) {
-            res.render('index' , {articles: category.articles, category: category});
-        } else {
+        if(category != undefined) {
+            Category.findAll().then(categories => {
+                res.render('index', { articles: category.articles, categories: categories });
+            });
+        }
+         else {
             res.redirect('/');
         }
     }).catch(err => {
         res.redirect('/');
     });
 });
+
+
 
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
