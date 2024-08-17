@@ -12,13 +12,14 @@
             <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
             </p>
         </div>
+
         <% articles.forEach(article => { %>
             <div class="card mb-3">
                 <div class="card-header">
                     <h5 class="card-title"><%= article.title %></h5>
                 </div>
                 <div class="card-body">
-                    <a href="#" class="btn btn-success" >Ler artigo</a>
+                    <a href="/<%= article.slug %>" class="btn btn-success" >Ler artigo</a>
                 </div>
             </div>
         <% }) %>
