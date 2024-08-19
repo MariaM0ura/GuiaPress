@@ -23,7 +23,7 @@
                     <td><%= article.id %></td>
                     <td><%= article.title %></td>
                     <td><%= article.slug %></td>
-                    <td><%= article.category.title %></td>
+                    <td><%= article.category ? article.category.title : 'Sem categoria' %></td>
                     <td>
                         <a href="categories/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
                         <form method="post" action="/articles/delete" style="display: inline;" onsubmit="confirmEvent(event, this)">

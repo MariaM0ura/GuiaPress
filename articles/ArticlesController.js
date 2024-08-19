@@ -26,7 +26,7 @@ router.get('/admin/articles', (req, res) => {
         res.redirect('/');  // ou para uma página de erro específica
     });
 });
-;
+
 
 router.post('/articles/save', (req, res) => {
     var title = req.body.title;
