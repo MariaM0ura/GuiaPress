@@ -1,7 +1,6 @@
 <%- include('../../partials/header.ejs') %>
 <%- include('../../partials/navbar.ejs') %>
 
-
 <div class="container">
     <hr>
     <div class="card">
@@ -9,19 +8,27 @@
             <h2>Editar artigo</h2>
         </div>
         <div class="card-body">
-            <form method="post" action="/articles/save">
-                <input class="form-control" type="text" name="title" placeholder="Nome da artigo"><br>
+            <form method="post" action="/articles/update">
+                <input type="hidden" name="id" value="<%= article.id %>">
+                <input class="form-control" type="text" name="title" placeholder="Nome do artigo" value="<%= article.title %>"><br>
                 <textarea class="form-control" placeholder="Escreva o artigo aqui" name="body" id="article"></textarea><br>
                 <select name="category" class="form-control">
                     <% categories.forEach((category) => { %>
+                        <% if(category.id == article.categoryId){ %>
+                            <option value="<%= category.id %>" selected><%= category.title %></option>
+                        <% } else { %>
                         <option value="<%= category.id %>"><%= category.title %></option>
-                        <% }) %>
+                        <% } %>
+                    <% }) %>
                 </select>
                 <button class="btn btn-success mt-2" type="submit">Atualizar</button>
             </form>            
         </div>
-
     </div>
+</div>
+
+<div id="content" style="display: none;">
+    <%= article.body %> 
 </div>
 
 <script src="/tinymce/tinymce.min.js"></script>
@@ -30,7 +37,11 @@
         selector: '#article',
         plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table contextmenu directionality emoticons template paste textcolor',
         toolbar_mode: 'floating',
-        height: 300 
+        height: 300,
+        init_instance_callback: function (editor) {
+            var content = document.getElementById('content').innerHTML;
+            editor.setContent(content);
+        }
     });
 </script>
 

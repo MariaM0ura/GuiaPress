@@ -15,12 +15,18 @@ router.get('/admin/articles/new', (req, res) => {
 });
 
 router.get('/admin/articles', (req, res) => {
-    Article.findAll({
-        include: [{model: Category}]
-    }).then(categories => {
-        res.render('admin/articles/index', {categories: categories});
-    })
+    Promise.all([
+        Article.findAll({
+            include: [{model: Category}]
+        }),
+        Category.findAll()
+    ]).then(([articles, categories]) => {
+        res.render('admin/articles/index', { articles: articles, categories: categories });
+    }).catch(err => {
+        res.redirect('/');  // ou para uma página de erro específica
+    });
 });
+;
 
 router.post('/articles/save', (req, res) => {
     var title = req.body.title;
@@ -66,14 +72,32 @@ router.get("/admin/articles/edit/:id", (req, res) => {
         res.redirect("/admin/articles");
     }
 
-    Article.findByPk(id).then(article => {
+    Article.findByPk(id)
+        .then(article => {
         if(article != undefined){
             Category.findAll().then(categories => {
-                res.render("admin/articles/edit", {categories: categories});
+                res.render("admin/articles/edit", {article: article, categories: categories});
             });
         }else{
             res.redirect("/");
         }
+    }).catch(err => {
+        res.redirect("/");
+    });
+});
+
+router.post("/articles/update", (req, res) => {
+    var id = req.body.id;
+    var title = req.body.title;
+    var body = req.body.body;
+    var category = req.body.category;
+
+    Article.update({title: title, body: body, categoryId: category, slug:slugify(title)}, {
+        where: {
+            id: id
+        }
+    }).then(() => {
+        res.redirect("/admin/articles");
     }).catch(err => {
         res.redirect("/");
     });

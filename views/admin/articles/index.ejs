@@ -1,5 +1,5 @@
 <%- include('../../partials/header.ejs') %>
-<%- include('../../partials/navbar.ejs') %>
+<%- include('../../partials/homenavbar') %>
 
 <div class="container ">
     <div style="display: inline;">
@@ -27,7 +27,7 @@
                     <td>
                         <a href="categories/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
                         <form method="post" action="/articles/delete" style="display: inline;" onsubmit="confirmEvent(event, this)">
-                            <input type="hidden" value="<%= article.id %>" name="id">
+                            <input type="hidden" value="<%= articles.id %>" name="id">
                             <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
                     </td>
