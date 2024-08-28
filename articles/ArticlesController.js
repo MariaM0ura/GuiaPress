@@ -3,19 +3,21 @@ const router = express.Router();
 const Category = require('../categories/Category');
 const Article = require('./Article');
 const slugify = require('slugify');
-
-
-
+const adminAuth = require('../middlewares/adminAuth'); // Verifique se o caminho está correto
 
 router.get('/admin/articles', (req, res) => {
     Article.findAll({
         include: [{model: Category}]
     }).then(articles => {
         res.render('admin/articles/index', {articles: articles});
+    }).catch(err => {
+        console.error(err); // Adicione um log para verificar erros
+        res.status(500).send('Internal Server Error');
     });
 });
 
-router.get('/admin/articles/new', (req, res) => {
+
+router.get('/admin/articles/new',adminAuth,  (req, res) => {
     Category.findAll().then(categories => {
         res.render('admin/articles/new', {categories: categories});
     })
@@ -58,7 +60,7 @@ router.post("/articles/delete", (req, res) => {
     }
 });
 
-router.get("/admin/articles/edit/:id", (req, res) => {
+router.get("/admin/articles/edit/:id", adminAuth, (req, res) => {
     var id = req.params.id;
 
     if(isNaN(id)){

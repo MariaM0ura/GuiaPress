@@ -1,22 +1,37 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const connection = require('./database/database');
 const path = require('path');
 //routes 
 const categoriesController = require('./categories/CategoriesController');
 const articlesController = require('./articles/ArticlesController');
+const UsersController = require('./users/UsersController');
 
 //modules
 const Article = require('./articles/Article');
 const Category = require('./categories/Category');
+const User = require('./users/User');
+
 const { where } = require('sequelize');
+const router = require('./categories/CategoriesController');
 
 app.set('view engine', 'ejs');
+
+//session
+app.use(session
+    ({
+        secret: 'myblog',
+        cookie: {maxAge: 3000000}
+    })
+);
+
 app.use(express.static('public'));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 
 
 //body parser
@@ -35,6 +50,9 @@ connection
 
 app.use('/', categoriesController);
 app.use('/', articlesController);
+app.use('/', UsersController);
+
+
 
 app.get('/', (req, res) => {
     Article.findAll({
