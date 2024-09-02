@@ -1,33 +1,27 @@
 <%- include('partials/header.ejs') %>
-<%- include('partials/homenavbar.ejs') %>
+<%- include('partials/navbar.ejs') %>
 
 
-<body>
+<body class="background">
     <div class="container  mt-4 p-4">
         <div class="jumbotron">
-            <h1 class="display-4">Hello, world!</h1>
-            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <h1 class="display-4 " style="color: var(--primary-color);">Welcome to Guia Press!</h1>
+            <p class="lead">Guia Press is a platform dedicated to technology Q&A, inspired by Yahoo Answers. Our goal is to facilitate learning in Node.js and JavaScript by providing a space to share and acquire technical knowledge.</p>
+            <p>We use this platform to promote interaction and continuous learning, making it easy to access technology-related questions and answers. Guia Press is designed with a focus on clarity and usability, ensuring that you can efficiently find and share knowledge.</p>
             <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </p>
+            </p>            
         </div>
 
         <% articles.forEach(article => { %>
-            <div class="card m-1 mb-4 mt-4 ">
-                <div class="card-header">
-                    <h5 class="card-title"><%= article.title %></h5>
-                </div>
-                <div class="card-body">
-                    <a href="/<%= article.slug %>" class="btn btn-success" >Ler artigo</a>
-                </div>
-            </div>
+            <% articles.forEach(article => { %>
+                <%- include('Components/box', { title: article.title, slug: article.slug }) %>
+            <% }) %>            
         <% }) %>
 
         <div class="row m-3">
             <div class="col col-12">
-                <a style="float: right;" href="/articles/page/2">Next >>></a>
+                <a style="float: right;" href="/articles/page/2"><i class="fa-regular fa-circle-right custom-icon-index"></i>
+                </i></a>
             </div>
         </div>
     </div>

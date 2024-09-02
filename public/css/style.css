@@ -1,0 +1,54 @@
+:root{
+    --primary-color: #14FFEC;
+    --secondary-color: #0D7377;
+    --dark-color: #212121;
+    --backgound-color : #323232;
+}
+
+body{
+    background-color: var(--dark-color);
+    color: white;
+    .h1{
+        background-color: var(--primary-color);
+    }
+}
+
+.navbar{
+    background-color: var(--backgound-color);
+}
+
+.h1{
+    background-color: var(--primary-color);
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--backgound-color);
+    color: white;
+}
+
+.card-title {
+    margin-bottom: 0; /* Remove a margem inferior padrão do título */
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.pr-3 {
+    padding-right: 1rem; /* Espaçamento à direita do bloco de views/stars */
+}
+
+.custom-icon-index {
+    font-size: 30px; /* Ajuste o tamanho conforme necessário */
+    color: var(--secondary-color);  /* Defina a cor desejada; #007bff é um azul padrão */
+}
+
+.custom-icon-index:hover {
+    color: var(--primary-color); /* Altere a cor ao passar o mouse */
+}
